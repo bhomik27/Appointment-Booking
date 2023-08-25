@@ -27,6 +27,19 @@ function saveToLocalStorage(event) {
     // printAppointment(Appointment);
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+  axios.get("https://crudcrud.com/api/277eadb9e3d94b8fa73efb94302f591a/appointmentData")
+    .then((response) => {
+      console.log(response)
+
+      for (var i = 0; i < response.data.length; i++){
+        printAppointment(response.data[i]);
+      }
+    })
+    .catch((error) => {
+      console.log(error)})
+    })
+
 function printAppointment(Appointment){
     const parentElement = document.getElementById('Appointment');
     const childElement = document.createElement('li');
