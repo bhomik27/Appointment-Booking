@@ -56,10 +56,14 @@ function printAppointment(Appointment){
     deleteButton.type = 'button';
     deleteButton.value = 'Delete';
   deleteButton.style.fontWeight = 'bold';
-  deleteButton.style.backgroundColor = 'red';
-    deleteButton.onclick = () => {
-        localStorage.removeItem(Appointment.name)
-        parentElement.removeChild(childElement)
+    deleteButton.onclick = (_id) => {
+        axios.delete(`https://crudcrud.com/api/277eadb9e3d94b8fa73efb94302f591a/appointmentData/${Appointment._id}`)
+            .then(() => {
+                parentElement.removeChild(childElement);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
   const editButton = document.createElement('input');
@@ -67,7 +71,6 @@ function printAppointment(Appointment){
   editButton.type = 'button';
   editButton.value = 'Edit';
   editButton.style.fontWeight = 'bold';
-  editButton.style.backgroundColor = 'green';
   editButton.onclick = () => {
     document.getElementById('name').value = Appointment.name;
     document.getElementById('num').value = Appointment.number;
