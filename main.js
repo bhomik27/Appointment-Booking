@@ -13,7 +13,7 @@ function saveToLocalStorage(event) {
       number
   }
   
-  axios.post("https://crudcrud.com/api/277eadb9e3d94b8fa73efb94302f591a/appointmentData", Appointment)
+  axios.post("https://crudcrud.com/api/8069d71141b74fca863ded888f7893c5/appointmentData", Appointment)
     .then((response) => {
       printAppointment(response.data)
       console.log(response);
@@ -28,7 +28,7 @@ function saveToLocalStorage(event) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  axios.get("https://crudcrud.com/api/277eadb9e3d94b8fa73efb94302f591a/appointmentData")
+  axios.get("https://crudcrud.com/api/8069d71141b74fca863ded888f7893c5/appointmentData")
     .then((response) => {
       console.log(response)
 
@@ -47,9 +47,6 @@ function printAppointment(Appointment){
 
     childElement.innerHTML = `name:${Appointment.name} <br> number: ${Appointment.number} <br> email: ${Appointment.email} <br>`;
 
-  
-
-    
 
   const deleteButton = document.createElement('input');
   deleteButton.id = 'delete';
@@ -57,7 +54,7 @@ function printAppointment(Appointment){
     deleteButton.value = 'Delete';
   deleteButton.style.fontWeight = 'bold';
     deleteButton.onclick = (_id) => {
-        axios.delete(`https://crudcrud.com/api/277eadb9e3d94b8fa73efb94302f591a/appointmentData/${Appointment._id}`)
+        axios.delete(`https://crudcrud.com/api/8069d71141b74fca863ded888f7893c5/appointmentData/${Appointment._id}`)
             .then(() => {
                 parentElement.removeChild(childElement);
             })
@@ -71,11 +68,20 @@ function printAppointment(Appointment){
   editButton.type = 'button';
   editButton.value = 'Edit';
   editButton.style.fontWeight = 'bold';
-  editButton.onclick = () => {
+  editButton.onclick =  (_id) => {
     document.getElementById('name').value = Appointment.name;
-    document.getElementById('num').value = Appointment.number;
     document.getElementById('email').value = Appointment.email;
-  };
+    document.getElementById('num').value = Appointment.number;
+
+    axios.delete(`https://crudcrud.com/api/8069d71141b74fca863ded888f7893c5/appointmentData/${Appointment._id}`)
+            .then(() => {
+                parentElement.removeChild(childElement);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+};
 
     
     parentElement.appendChild(childElement);
